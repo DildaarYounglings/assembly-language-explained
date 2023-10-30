@@ -300,9 +300,7 @@ function App() {
 
   return (
     <React.Fragment>
-      <div>
         <QuestionsAndAnswers />
-      </div>
     </React.Fragment>
   );
 }

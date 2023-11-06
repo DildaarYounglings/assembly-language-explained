@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 
-function QuestionsAndAnswers() {
+function QuestionsAndAnswersOnAssemblyLanguage() {
   return (
     <div>
       <h1>questions and answers</h1>
@@ -292,7 +292,133 @@ function QuestionsAndAnswers() {
           24A) function recursion
         </p>
       </article>
+      25Q)Select the part of the code that adds a newline character after a
+      string. Correct.
+      <ul>section .data strl db "hello",10</ul>
+      25A) 10 26Q)Arrange the steps for creating a loop in the correct order.
+      Drag and drop the answers into the correct sequence of events. Answer
+      instructions 26A)Specify the number of times the loops will run in the ECX
+      register Label the section of the code to be looped Used the ‘loop’
+      command to start the looop 27Q)Which of the following is created using the
+      percentage (%) sign? Drag the answer from the word bank to the text box.
+      Answer instructions Macros Calls Loops Strings 27A) Correct ans =&gt;
+      Macros
     </div>
+  );
+}
+function LessonSummaryModule2() {
+  return (
+    <ul>
+      <li>
+        Constants can be created with the equ, assign or define commands.
+        Constants created with the assign command can be redefined, but cannot
+        be reassigned.
+      </li>
+      <li>
+        While the Assign command is used for numeric constants, the define
+        command is used for numbers and strings. The inc command adds 1 to a
+        variable, while the dec command reduces a variable by 1.
+      </li>
+      <li>
+        The result of add command is automatically stored in the first operand.
+        While the mul command multiplies unsigned data, the imul command
+        multiplies signed data. The EAX register must store the first value
+        passed to the mul & div commands.
+      </li>
+      <li>
+        The and, or, xor and not operators are used to carry out logical checks
+        on a binary level. The compare (cmp) instruction compares the values of
+        the two operands passed to it .
+      </li>
+      <li>
+        {" "}
+        A conditional jump creates a loop that runs as long as a condition is
+        true. The jmp instruction creates an unconditional jump. Functions are
+        called using the ‘call’ keyword, and must have a return statement.
+      </li>
+      <li>
+        The Stack data structure is used to store and retrieve data on a last in
+        first out basis. The push command is used to add data to a stack, while
+        the pop command removes the topmost data from a stack.
+      </li>
+      <li>
+        Function recursion describes a situation in which a function calls
+        itself. The number of times a loop is needed to run, must be specified
+        in the ECX register.
+      </li>
+      <li>
+        Macros are a set of instructions that can be initiated using a unique
+        name, in any part of an Assembly code. Macros are created with the
+        percentage (%) sign.
+      </li>
+    </ul>
+  );
+}
+function GameScene() {
+  return (
+    <canvas
+      style={{ width: `${window.innerWidth}`, height: `${window.innerHeight}` }}
+      width={window.innerWidth}
+      height={window.innerHeight}
+    />
+  );
+}
+function GameSceneWrapper(props) {
+  console.log(props);
+  return (
+    <div
+      style={{
+        backgroundColor: "blue",
+        border: "1px solid blue",
+        width: "fit-content",
+        height: "fit-content",
+      }}
+    ></div>
+  );
+}
+function WebCamera() {
+  const [cameraSwitch, setCameraSwitch] = useState(false);
+  const canvasRef = useRef();
+  const videoRef = useRef();
+  let mediaStream = null;
+
+  const initializeCamera = () => {
+    if (cameraSwitch) {
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then((signal) => {
+          mediaStream = signal;
+          const video = videoRef.current;
+          video.style.display = 'block';
+          video.srcObject = mediaStream;
+          video.play();
+        })
+        .catch((err) => {
+          window.alert(err);
+        });
+    } else {
+      if (mediaStream) {
+        // Stop the camera access
+        const tracks = mediaStream.getTracks();
+        tracks.forEach((track) => track.stop());
+        mediaStream = null;
+      }
+      const video = videoRef.current;
+      video.pause();
+      video.style.display = 'none';
+    }
+  };
+
+  useEffect(() => {
+    initializeCamera();
+  }, [cameraSwitch]);
+
+  return (
+    <>
+      <video ref={videoRef}></video>
+      <button onClick={() => setCameraSwitch(!cameraSwitch)}>Toggle Camera</button>
+      <canvas ref={canvasRef}></canvas>
+    </>
   );
 }
 function App() {
@@ -300,7 +426,12 @@ function App() {
 
   return (
     <React.Fragment>
-        <QuestionsAndAnswers />
+      <WebCamera/>
+      {/*
+        <GameSceneWrapper>
+          <GameScene/>
+        </GameSceneWrapper>
+        <QuestionsAndAnswersOnAssemblyLanguage />*/}
     </React.Fragment>
   );
 }
